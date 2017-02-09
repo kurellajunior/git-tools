@@ -1,0 +1,36 @@
+#!/bin/bash
+
+function fail {
+	echo 
+    echo $1
+    echo
+    exit $2
+}
+
+# set current branch
+BRANCH=$(git branch 2>/dev/null| sed -n '/^\*/s/^\* //p')
+TMP_BRANCH=__tmp
+
+# set rebase base
+if [[ "X$1" == "X" ]]; then
+    BASE_BRANCH=master
+else
+    BASE_BRANCH=$1
+fi
+
+# update
+git fetch                                  || fail "fetch failed" 1
+# create tmp branch
+git checkout -b ${TMP_BRANCH}              || fail "checkout failed" 2
+# interactive to remove local only commits
+git rebase -i ${BASE_BRANCH}               || fail "rebase aborted" 3
+# move base branch to new head
+git checkout ${BASE_BRANCH}                || fail "checkout failed" 4
+git reset --hard ${TMP_BRANCH}             || fail "reset failed" 5
+# reorg local branch
+git checkout ${BRANCH}                     || fail "checkout failed" 4
+git rebase ${BASE_BRANCH}                  || fail "reset failed" 5
+# clean up
+git branch -d ${TMP_BRANCH}                || fail "cleanup failed" 6
+
+exit 0

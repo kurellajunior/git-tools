@@ -1,0 +1,4 @@
+
+source ~/.local/opt/git_extras_functions
+
+PS1='[$(date +%H:%M:%S)]\[$(branch_color)\]$(parse_git_branch)\[${c_sgr0}\]'$PS1

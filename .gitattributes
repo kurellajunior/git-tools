@@ -1,0 +1,9 @@
+*         text=auto
+*.tex     diff=tex
+*.java    diff=java
+*.c       diff=cpp
+*.cpp     diff=cpp
+*.html    diff=html
+*.xhtml   diff=html
+*.xml     diff=html
+*.py      diff=python

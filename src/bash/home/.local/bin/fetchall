@@ -1,0 +1,23 @@
+#!/bin/bash
+if [[ "X$1" == "X" ]]; then
+    RepoPath=$(pwd)
+else
+    RepoPath=$1
+fi
+
+for file in $(find -L ${RepoPath} -mindepth 1 -maxdepth 1 -type d)
+do
+	cd $file
+    echo
+    echo "#––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––"
+    if [ -d .git ]; then
+        echo "# fetching $file"
+    	git fetch --all
+    else
+        echo "# skipping non-git-folder $file"
+    fi
+    cd - >/dev/null 2>&1
+done
+touch ${RepoPath}/.fetched
+status ${RepoPath}
+

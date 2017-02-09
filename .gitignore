@@ -1,0 +1,73 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# LaTeX build files #
+*.aux
+*.bbl
+*-blx.bib
+*.blg
+*.fdb_latexmk
+*.fls
+*.lol
+*.lot
+*.lof
+*.out
+*.tdo
+*.toc
+*.run.xml
+
+# IDE files #
+#############
+.classpath
+.settings
+.project
+.metadata
+nb-configuration.xml
+target/
+build/
+out/
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.war
+*.tar
+*.zip
+*.bin
+
+# Logs and databases #
+######################
+log/
+logs/
+*.log
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+lost+found/
+
+# temp files #
+######################
+tmp/
+temp/
+*~

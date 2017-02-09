@@ -1,0 +1,58 @@
+c_grey=`tput setaf 7`
+c_cyan=`tput setaf 6`
+c_purple=`tput setaf 5`
+c_blue=`tput setaf 4`
+c_red=`tput setaf 1`
+c_orange=`tput setaf 3`
+c_green=`tput setaf 2`
+c_sgr0=`tput sgr0`
+parse_git_branch ()
+{
+    # retrieve the branch name
+    if git rev-parse --git-dir >/dev/null 2>&1
+    then
+    	gitver=$(git branch 2>/dev/null| sed -n '/^\*/s/^\* //p')
+    else
+    	return 0
+    fi
+    # get the commit status
+    left="["
+    right="]"
+    if $(git status | grep diverg 2>/dev/null >&2)
+	then
+	    left="^"
+        right="^"
+    elif $(git status | egrep '(ahead|ist vor)' 2>/dev/null >&2)
+    then
+        left="^"
+    elif $(git status | egrep '(behind|hinterher)' 2>/dev/null >&2)
+    then
+        right="^"
+    fi
+
+    echo -e $left$gitver$right
+}
+branch_color ()
+{
+    if git rev-parse --git-dir >/dev/null 2>&1
+    then
+        color="${c_green}"
+        if $(git status -s | egrep '^.(M|D)' 2>/dev/null >&2)
+        then
+	        color="${c_red}"
+        elif $(git status -s | egrep '^(A|M|R|D)' 2>/dev/null >&2)
+        then
+            color="${c_orange}"
+            if $(git status -s | egrep '^.\?' 2>/dev/null >&2)
+            then
+                color="${c_purple}"
+            fi
+        elif $(git status -s | egrep '^.\?' 2>/dev/null >&2)
+        then
+            color="${c_cyan}"
+	    fi
+    else
+    	return 0
+    fi
+    echo -ne $color
+}
