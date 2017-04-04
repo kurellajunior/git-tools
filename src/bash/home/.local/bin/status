@@ -20,7 +20,7 @@ do
     if [ -d .git ]; then
     	STATUS="$(branch_color)$(parse_git_branch)${c_sgr0}"
     	REPO=$(echo $file | sed 's!.*/!!g' )
-    	echo "$REPO : $STATUS" | awk "{printf (\"%-${MAX_LENGTH}s %-1s %-15s \\n\",\$1,\$2, \$3) }"
+    	echo "$REPO : $STATUS" | awk "{printf (\"%-${MAX_LENGTH}s %-1s %-15s\\n\",\$1,\$2, \$3) }" | perl -ne 's/(?<=[_ ]) (?= )/_/g; print;'
     else
         echo "${c_grey}skipping non-git-folder   : $file${c_sgr0}"
     fi
