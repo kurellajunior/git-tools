@@ -10,13 +10,17 @@ source ~/.local/opt/git_extras_functions
 
 echo
 echo "fetched: "$(date -r ${RepoPath}/.fetched "+%d. %B %R")
-for file in $(find -L ${RepoPath} -mindepth 1 -maxdepth 1 -type d)
+
+FILE_LIST=$(find -L ${RepoPath} -mindepth 1 -maxdepth 1 -type d)
+MAX_LENGTH=$(echo "$FILE_LIST" | sed 's!.*/!!g' | awk '{print length}'| sort -nr | head -1)
+
+for file in $FILE_LIST
 do
 	cd $file
     if [ -d .git ]; then
     	STATUS="$(branch_color)$(parse_git_branch)${c_sgr0}"
     	REPO=$(echo $file | sed 's!.*/!!g' )
-    	echo "$REPO : $STATUS" | awk '{printf ("%-25s %-1s %-15s \n",$1,$2, $3) }'
+    	echo "$REPO : $STATUS" | awk "{printf (\"%-${MAX_LENGTH}s %-1s %-15s \\n\",\$1,\$2, \$3) }"
     else
         echo "${c_grey}skipping non-git-folder   : $file${c_sgr0}"
     fi
