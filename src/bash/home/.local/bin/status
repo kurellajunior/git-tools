@@ -11,7 +11,7 @@ source ~/.local/opt/git_extras_functions
 echo
 echo "fetched: "$(date -r ${RepoPath}/.fetched "+%d. %B %R")
 
-FILE_LIST=$(find -L ${RepoPath} -mindepth 1 -maxdepth 1 -type d)
+FILE_LIST=$(find -L ${RepoPath} -mindepth 1 -maxdepth 1 -type d | sort)
 MAX_LENGTH=$(echo "$FILE_LIST" | sed 's!.*/!!g' | awk '{print length}'| sort -nr | head -1)
 
 for file in $FILE_LIST
