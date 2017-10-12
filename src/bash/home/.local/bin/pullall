@@ -53,4 +53,5 @@ else
     do
         pullFolder $folder
     done
+    status
 fi
