@@ -22,10 +22,10 @@ parse_git_branch ()
 	then
 	    left="^"
         right="^"
-    elif $(git status | egrep '(ahead|ist vor)' 2>/dev/null >&2)
+    elif $(git status | egrep '(ahead|ist .* vor)' 2>/dev/null >&2)
     then
         left="^"
-    elif $(git status | egrep '(behind|hinterher)' 2>/dev/null >&2)
+    elif $(git status | egrep '(behind|ist .* hinter)' 2>/dev/null >&2)
     then
         right="^"
     fi
