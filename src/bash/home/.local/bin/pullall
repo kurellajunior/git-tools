@@ -12,7 +12,7 @@ function pullGit {
             active_branch=$branch
             echo active branch = $active_branch
         fi
-        git checkout $branch && git pull --rebase=preserve
+        git checkout $branch && git fetch --prune && git pull --rebase=preserve
     done;
     git checkout $active_branch
 }
